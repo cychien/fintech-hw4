@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<title>DApp-example: Bank</title>
+	<style>
+		.flex {
+			display: flex;
+		}
+
+		.item {
+			flex: 1;
+			padding: 2rem;
+			margin-bottom: 100px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="flex">
+		<div class="item">
+			<h3>銀行合約</h3>
+			<h5 id="contractAddress">合約位址: </h5>
+			<input id="deployedContractAddressInput" type="text" placeholder="請輸入既有合約位址" />
+			<button id="loadDeployedContractButton">載入既有合約位址</button>
+			<button id="deployNewContractButton">部署新合約</button>
+
+			<hr>
+			<h3>刪除合約</h3>
+			<button id="killContractButton">刪除目前合約</button>
+
+			<hr>
+			<h3>帳戶登入</h3>
+			<select id="whoami"></select>
+			<button id="whoamiButton">登入</button>
+			<button id="copyButton">複製</button>
+
+			<hr>
+			<h3 id="accountStatus">帳戶狀態</h3>
+			<h5 id="ethBalance">以太帳戶餘額 (wei): </h5>
+			<h5 id="bankBalance">銀行ETH餘額 (wei): </h5>
+			<h5 id="cDepositDisplay">銀行定存金額 (wei): </h5>
+			<h5 id="periodDisplay">銀行定存期數 (期): </h5>
+
+			<hr>
+			<h3 id="updateCoin">更新餘額</h3>
+			<button id="update">執行</button>
+
+			<hr>
+			<h3>存款</h3>
+			<input id="deposit" type="number" placeholder="請輸入存款額度 (ether)">
+			<button id="depositButton">執行</button>
+
+			<hr>
+			<h3>提款</h3>
+			<input id="withdraw" type="number" placeholder="請輸入提款額度 (ether)">
+			<button id="withdrawButton">執行</button>
+
+			<hr>
+			<h3>轉帳 ETH</h3>
+			<input id="transferEtherTo" type="text" placeholder="請輸入轉帳對象">
+			<input id="transferEtherValue" type="number" placeholder="請輸入轉帳額度 (ether)">
+			<button id="transferEtherButton">執行</button>
+
+			<h3 style='margin-top: 50px;' class='text-primary'>購買定存</h3>
+			<form class="form-inline pl-0">
+				<div class="form-group mb-2 mr-3">
+					<input type="text" id="cDepositAmount" class="form-control" placeholder="定存金額">
+				</div>
+				<div class="form-group mb-2 mr-3">
+					<input type="text" id="cDepositPeriod" class="form-control"  placeholder="期數">
+				</div>
+				<button type="button" id="cDepositSettingButton" class="btn btn-outline-primary mb-2">執行</button>
+			</form>
+
+			<h3 style='margin-top: 30px;' class='text-primary'>提前解約</h3>
+			<div class='d-flex align-items-center'>
+				<label class='mr-5 text-secondary' style='font-size: 1.2em;'>合約期滿</label>
+				<div>
+					<button type="button" id="contractExpiredButton" class="btn btn-outline-primary mb-2">執行</button>
+				</div>
+			</div>
+			<div class='d-flex align-items-center'>
+				<label class='mr-5 text-secondary' style='font-size: 1.2em;'>提前解約</label>
+				<div class="form-group mb-2 mr-3">
+					<input type="text" id="completedPeriod" class="form-control"  placeholder="已完成期數">
+				</div>
+				<button type="button" id="terminateContractButton" class="btn btn-outline-primary mb-2">執行</button>
+			</div>
+		</div>
+		<div class="item" style="width:500px;">
+			<h3>活動紀錄</h3>
+			<pre id="logger"></pre>
+		</div>
+	</div>
+
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+	<script src="js/web3.min.js"></script>
+	<script src="js/bank.js"></script>
+	<script src="js/index.js"></script>
+</body>
+
+</html>

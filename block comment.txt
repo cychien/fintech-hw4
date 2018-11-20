@@ -1,0 +1,58 @@
+/*
+setCDeposit功能，包含正整數定存金額，與正整數定存期間。
+紀錄會員的定存帳戶，並讓定存帳戶金額增加。
+紀錄會員的定存期間。
+通知SetCDepositEvent給web3.js
+*/
+//購買定存
+function setCDeposit(uint256 setPeriod) public payable {
+    // cDeposit[msg.sender] = cDeposit[msg.sender] + msg.value
+    cDeposit[msg.sender] += msg.value;
+    period[msg.sender] = setPeriod;
+
+    emit SetCDepositEvent(msg.sender, msg.value, now);
+}
+
+/*
+ContractExpired功能
+計算本金+本金*期數/100
+將計算結果加回帳戶餘額中
+將定存餘額重設為0
+將定存期數重設為0
+通知ContractExpiredEvent給web3.js
+*/
+// 合約期滿
+function contractExpired() public {
+    uint256 result = cDeposit[msg.sender] + cDeposit[msg.sender] * period[msg.sender] / 100;
+    balance[msg.sender] += result; 
+    cDeposit[msg.sender] = 0;
+    period[msg.sender] = 0;
+    emit ContractExpiredEvent(msg.sender, result, now);
+}
+
+/*
+TerminateContract功能
+計算本金+本金*期數/100*經過期間/預設定存期間
+將計算結果加回帳戶餘額中
+將定存餘額重設為0
+將定存期數重設為0
+通知TerminateContractEvent給web3.js
+*/
+// 提前解約
+function terminateContract(uint256 tPeriod) public {
+    uint256 result = cDeposit[msg.sender] + cDeposit[msg.sender] * period[msg.sender] / 100 * tPeriod / period[msg.sender];
+    balance[msg.sender] += result; 
+    cDeposit[msg.sender] = 0;
+    period[msg.sender] = 0;
+    emit TerminateContractEvent(msg.sender, result, now);
+}
+
+// 檢查銀行定存金額
+function getCDeposit() public view returns (uint256) {
+    return cDeposit[msg.sender];
+}
+
+// 檢查銀行定存期數
+function getPeriod() public view returns (uint256) {
+    return period[msg.sender];
+}
